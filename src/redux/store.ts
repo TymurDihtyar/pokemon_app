@@ -1,11 +1,9 @@
 import {configureStore} from "@reduxjs/toolkit";
-
-import { themeReducer} from "./slices";
+import {pokemonReducer} from "./slices";
 
 const store = configureStore({
     reducer:{
-        // movies: moviesReducer,
-        theme: themeReducer
+        pokemon: pokemonReducer,
     }
 })
 
