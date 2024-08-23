@@ -5,7 +5,6 @@ import {IPokemon, IPokemons} from "../../interfaces/pokemosInterface";
 import {IOnePokemon} from "../../interfaces/onePokemonInterface";
 import {PokemonService} from "../../services/pokemonService";
 
-
 interface IState {
     count: number
     next: string
@@ -27,7 +26,7 @@ const initialState: IState = {
 }
 
 const getPokemones = createAsyncThunk<IPokemons, { url: string }>(
-    'moviesSlice/getMovies',
+    'pokemonSlice/getPokemones',
     async ({url}, {rejectWithValue}) => {
         try {
             const {data} = await PokemonService.getAll(url)
@@ -40,7 +39,7 @@ const getPokemones = createAsyncThunk<IPokemons, { url: string }>(
 )
 
 const getPokemonById = createAsyncThunk<IOnePokemon, { id: string }>(
-    'moviesSlice/getMovieById',
+    'pokemonSlice/getPokemonById',
     async ({id}, {rejectWithValue}) => {
         try {
             const {data} = await PokemonService.getOne(id)
@@ -70,7 +69,6 @@ const pokemonSlice = createSlice({
         builder
             .addCase(getPokemonById.fulfilled, (state, action) => {
                 state.pokemonById = action.payload
-                console.log(state.pokemonById)
                 state.isLoading = false
             })
 

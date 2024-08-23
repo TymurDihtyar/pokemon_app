@@ -16,6 +16,8 @@ export interface IOnePokemon {
     past_types: any[];
     species: Species;
     sprites: Sprites;
+    stats: Stat[]; // Додано інтерфейс для статистики
+    types: any[];
 }
 
 interface Ability {
@@ -159,4 +161,16 @@ interface AnimatedSprites {
     front_female: string | null;
     front_shiny: string | null;
     front_shiny_female: string | null;
+}
+
+// Додаємо інтерфейси для статистики
+interface Stat {
+    base_stat: number;
+    effort: number;
+    stat: StatDetail;
+}
+
+interface StatDetail {
+    name: string;
+    url: string;
 }
