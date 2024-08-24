@@ -5,6 +5,8 @@ import { IOnePokemon } from "../../interfaces/onePokemonInterface";
 import {FormInfo} from "../Form/FormInfo";
 import {useAppDispatch} from "../../hooks";
 import {formActions} from "../../redux/slices";
+import {toast} from "react-toastify";
+import {toastifyParam} from "../../constants/tostifyParamers";
 
 interface IProps extends PropsWithChildren {
     pokemonById: IOnePokemon;
@@ -20,6 +22,27 @@ const PokemonInfo: FC<IProps> = ({ pokemonById }) => {
             dispatch(formActions.getPokemonForm({url:selectedForm}))
         }
     }, [selectedForm, dispatch]);
+
+
+    const handleAddPokemon = (name: string, id: number) => {
+        const collection = JSON.parse(localStorage.getItem("myCollection")) || [];
+        const isPokemonInCollection = collection.some((pokemon: { name: string; id: number }) => pokemon.id === id);
+
+        if (!isPokemonInCollection) {
+            const newCollection = [...collection, { name, id }];
+            localStorage.setItem("myCollection", JSON.stringify(newCollection));
+            toast.success('Pokemon added to collection', toastifyParam);
+        }else {
+            toast.error('Pokemon already in collection', toastifyParam);
+        }
+    };
+
+    const handleDeletePokemon = (id: number) => {
+        const collection = JSON.parse(localStorage.getItem("myCollection")) || [];
+        const newCollection = collection.filter((pokemon: { name: string; id: number }) => pokemon.id !== id);
+        localStorage.setItem("myCollection", JSON.stringify(newCollection));
+        toast.warn('Pokemon deleted from collection', toastifyParam);
+    };
 
     return (
         <div className="bg-gradient-to-bl from-indigo-300 via-blue-300 to-purple-300 min-h-screen pt-10">
@@ -82,7 +105,7 @@ const PokemonInfo: FC<IProps> = ({ pokemonById }) => {
                                             key={item.name}
                                             value={item.url}
                                             className={({ checked }) =>
-                                                `w-24 cursor-pointer bg-orange-700 text-white shadow-sm group relative
+                                                `w-24 cursor-pointer bg-gray-700 text-white shadow-sm group relative
                                                     flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium
                                                     uppercase hover:bg-gray-500 focus:outline-none ${
                                                     checked ? 'ring-2 ring-indigo-500 border-transparent' : 'border-gray-300'
@@ -96,9 +119,16 @@ const PokemonInfo: FC<IProps> = ({ pokemonById }) => {
                             </fieldset>
                         </div>
                         <button
+                            onClick={() => handleAddPokemon(name, id)}
                             className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                             Add to collection
+                        </button>
+                        <button
+                            onClick={() => handleDeletePokemon(id)}
+                            className="mt-4 flex w-full items-center justify-center rounded-md border border-transparent bg-red-600 px-8 py-3 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        >
+                            Remove from collection
                         </button>
 
                     </div>

@@ -6,7 +6,6 @@ import {IOnePokemon} from "../../interfaces/onePokemonInterface";
 import {PokemonService} from "../../services/pokemonService";
 
 interface IState {
-    count: number
     next: string
     previous: string
     allPokemons: IPokemon[]
@@ -16,7 +15,6 @@ interface IState {
 }
 
 const initialState: IState = {
-    count: null,
     next: null,
     previous: null,
     allPokemons: [],
@@ -62,16 +60,16 @@ const pokemonSlice = createSlice({
                 state.isLoading = false
             })
 
-            .addMatcher(isFulfilled(getPokemones), (state, action) => {
-                const {results, count, next, previous} = action.payload
+            .addCase(getPokemones.fulfilled, (state, action) => {
+                const {results, next, previous} = action.payload
                 state.allPokemons = results
                 state.previous = previous
                 state.next = next
-                state.count = count
                 state.pokemonById = null
                 state.errors = false
                 state.isLoading = false
             })
+
             .addMatcher(isRejected(getPokemonById, getPokemones), (state) => {
                 state.errors = true
                 state.isLoading = false

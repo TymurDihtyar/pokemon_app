@@ -1,17 +1,16 @@
 import {FC, PropsWithChildren} from 'react';
-import {IPokemon} from "../../interfaces/pokemosInterface";
 import {NavLink} from "react-router-dom";
 import {useAppDispatch} from "../../hooks";
 import {pokemonActions} from "../../redux/slices";
 
 interface IProps extends PropsWithChildren {
-    item: IPokemon
+    name: string;
+    id: string;
 }
 
-const OnePokemon: FC<IProps> = ({item}) => {
+const OnePokemon: FC<IProps> = ({name, id}) => {
     const dispatch = useAppDispatch();
-    const {url, name} = item
-    const id = url.split('/').reverse()[1]
+
 
     return (
         <NavLink to={`/pokemons/${id}`} onClick={() => dispatch(pokemonActions.getPokemonById({id}))}>
