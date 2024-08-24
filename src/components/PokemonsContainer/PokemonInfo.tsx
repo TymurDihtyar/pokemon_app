@@ -1,7 +1,10 @@
-import { FC, PropsWithChildren } from 'react';
+import {FC, PropsWithChildren, useEffect} from 'react';
 import { useState } from 'react';
 import { Radio, RadioGroup } from '@headlessui/react';
 import { IOnePokemon } from "../../interfaces/onePokemonInterface";
+import {FormInfo} from "../Form/FormInfo";
+import {useAppDispatch} from "../../hooks";
+import {formActions} from "../../redux/slices";
 
 interface IProps extends PropsWithChildren {
     pokemonById: IOnePokemon;
@@ -10,9 +13,16 @@ interface IProps extends PropsWithChildren {
 const PokemonInfo: FC<IProps> = ({ pokemonById }) => {
     const { stats, forms, name, abilities, types, sprites, id } = pokemonById;
     const [selectedForm, setSelectedForm] = useState<string>(null);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (selectedForm !== null) {
+            dispatch(formActions.getPokemonForm({url:selectedForm}))
+        }
+    }, [selectedForm, dispatch]);
 
     return (
-        <div className="bg-white">
+        <div className="bg-gradient-to-bl from-indigo-300 via-blue-300 to-purple-300 min-h-screen pt-10">
             <div className="pt-6">
                 {/* Image gallery */}
                 <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
@@ -50,75 +60,71 @@ const PokemonInfo: FC<IProps> = ({ pokemonById }) => {
 
                 {/* Product info */}
                 <div
-                    className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
+                    className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-8 lg:pt-8">
                     <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{name.toUpperCase()}</h1>
+                        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl bg-gradient-to-r from-rose-900 via-amber-700 to-fuchsia-500 inline-block text-transparent bg-clip-text">{name.toUpperCase()}</h1>
                     </div>
 
                     {/* Options */}
                     <div className="mt-4 lg:row-span-3 lg:mt-0">
-                        <form className="mt-10">
-                            <div>
-                                <div className="flex items-center justify-between">
-                                    <h3 className="text-sm font-medium text-gray-900">Forms</h3>
-                                </div>
-
-                                <fieldset aria-label="Choose a form" className="mt-4">
-                                    <RadioGroup
-                                        value={selectedForm}
-                                        onChange={setSelectedForm}
-                                        className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
-                                    >
-                                        {forms.map((item) => (
-                                            <Radio
-                                                key={item.name}
-                                                value={item.name}
-                                                className={({ checked }) =>
-                                                    `w-24 cursor-pointer bg-white text-gray-900 shadow-sm group relative
-                                                    flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium
-                                                    uppercase hover:bg-gray-50 focus:outline-none ${
-                                                        checked ? 'ring-2 ring-indigo-500 border-transparent' : 'border-gray-300'
-                                                    }`
-                                                }
-                                            >
-                                                <span>{item.name}</span>
-                                            </Radio>
-                                        ))}
-                                    </RadioGroup>
-                                </fieldset>
+                        <div>
+                            <div className="flex items-center justify-between">
+                                <h3 className="text-lg font-medium text-gray-900">Forms</h3>
                             </div>
+                            <fieldset aria-label="Choose a form" className="mt-4">
+                                <RadioGroup
+                                    value={selectedForm}
+                                    onChange={setSelectedForm}
+                                    className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
+                                >
+                                    {forms.map((item) => (
+                                        <Radio
+                                            key={item.name}
+                                            value={item.url}
+                                            className={({ checked }) =>
+                                                `w-24 cursor-pointer bg-orange-700 text-white shadow-sm group relative
+                                                    flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium
+                                                    uppercase hover:bg-gray-500 focus:outline-none ${
+                                                    checked ? 'ring-2 ring-indigo-500 border-transparent' : 'border-gray-300'
+                                                }`
+                                            }
+                                        >
+                                            <span>{item.name}</span>
+                                        </Radio>
+                                    ))}
+                                </RadioGroup>
+                            </fieldset>
+                        </div>
+                        <button
+                            className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        >
+                            Add to collection
+                        </button>
 
-                            <button
-                                type="submit"
-                                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            >
-                                Add to collection
-                            </button>
-                        </form>
                     </div>
 
                     <div className="flex justify-around py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-8 lg:pr-8 lg:pt-6">
                         {/* Description and details */}
                         <div>
                             <div>
-                                <h3 className="text-lg font-medium text-gray-900">Types</h3>
+                                <h3 className="text-lg font-medium text-black">Types</h3>
                                 <div className="mt-2">
                                     <ul role="list" className="list-disc space-y-2 pl-4 text-lg">
                                         {types.map((item, index) => (
                                             <li key={index} className="text-gray-400">
-                                                <span className="text-gray-600">{item.type.name}</span>
+                                                <span className="text-white">{item.type.name}</span>
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
                             </div>
                             <div className="mt-10">
-                                <h3 className="text-lg font-medium text-gray-900">Abilities</h3>
+                                <h3 className="text-lg font-medium text-black">Abilities</h3>
                                 <div className="mt-2">
                                     <ul role="list" className="list-disc space-y-2 pl-4 text-lg">
                                         {abilities.map((item, index) => (
                                             <li key={index} className="text-gray-400">
-                                                <span className="text-gray-600">{item.ability.name}</span>
+                                                <span className="text-white">{item.ability.name}</span>
                                             </li>
                                         ))}
                                     </ul>
@@ -126,12 +132,12 @@ const PokemonInfo: FC<IProps> = ({ pokemonById }) => {
                             </div>
                         </div>
                         <div className="">
-                            <h3 className="text-lg font-medium text-gray-900">Stats</h3>
+                            <h3 className="text-lg font-medium text-black">Stats</h3>
                             <div className="mt-2">
                                 <ul role="list" className="list-disc space-y-2 pl-4 text-lg">
                                     {stats.map((item, index) => (
                                         <li key={index} className="text-gray-400">
-                                            <span className="text-gray-600">{item.stat.name} : {item.base_stat}</span>
+                                            <span className="text-white">{item.stat.name} : {item.base_stat}</span>
                                         </li>
                                     ))}
                                 </ul>
@@ -141,6 +147,7 @@ const PokemonInfo: FC<IProps> = ({ pokemonById }) => {
                     </div>
                 </div>
             </div>
+            {selectedForm && <FormInfo/>}
         </div>
     );
 };

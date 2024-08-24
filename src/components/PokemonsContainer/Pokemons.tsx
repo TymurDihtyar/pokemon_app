@@ -1,5 +1,5 @@
 import {FC, PropsWithChildren} from 'react';
-import {IPokemon, IPokemons} from "../../interfaces/pokemosInterface";
+import {IPokemon} from "../../interfaces/pokemosInterface";
 import {OnePokemon} from "./OnePokemon";
 
 interface IProps extends PropsWithChildren {
@@ -8,9 +8,9 @@ interface IProps extends PropsWithChildren {
 
 const Pokemons:FC<IProps> = ({pokemon}) => {
     return (
-        <div className="bg-gradient-to-bl from-indigo-900 via-blue-500 to-purple-900">
+        <div className="bg-gradient-to-bl from-indigo-300 via-blue-300 to-purple-300 min-h-screen pt-10">
             <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:max-w-7xl lg:px-8">
-                <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-x-8">
+                <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-x-8">
                     {pokemon.map((item) => (
                         <OnePokemon key={item.name} item={item}/>
                     ))}

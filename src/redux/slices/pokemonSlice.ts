@@ -54,17 +54,7 @@ const getPokemonById = createAsyncThunk<IOnePokemon, { id: string }>(
 const pokemonSlice = createSlice({
     name: 'pokemonSlice',
     initialState,
-    reducers: {
-        setCount: (state, action) => {
-            state.count = action.payload.count
-        },
-        setNext: (state, action) => {
-            state.next = action.payload.next
-        },
-        setPrevious:(state, action) => {
-            state.previous = action.payload.previous
-        }
-    },
+    reducers: {},
     extraReducers: builder =>
         builder
             .addCase(getPokemonById.fulfilled, (state, action) => {

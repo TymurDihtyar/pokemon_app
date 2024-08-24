@@ -24,7 +24,7 @@ const OnePokemon: FC<IProps> = ({item}) => {
                         className="h-full w-full object-cover object-center group-hover:opacity-75"
                     />
                 </div>
-                <h3 className="mt-2 font-medium text-white">{name.toUpperCase()}</h3>
+                <h3 className="mt-2 font-medium text-black">{name.toUpperCase()}</h3>
             </div>
         </NavLink>
     );
