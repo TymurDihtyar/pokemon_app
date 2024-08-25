@@ -1,11 +1,12 @@
 import {Disclosure, DisclosureButton, DisclosurePanel} from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { NavLink } from "react-router-dom";
+import {SearchForm} from "../searchContainer/SearchForm";
+
 
 const navigation = [
     { name: 'Pokemon', link: 'pokemons'},
     { name: 'My Collection', link: 'my-collection'},
-    { name: 'Search', link: 'search'},
 ]
 
 const Navbar = () => {
@@ -44,6 +45,7 @@ const Navbar = () => {
                                         {item.name}
                                     </NavLink>
                                 ))}
+                                <SearchForm/>
                             </div>
                         </div>
                     </div>
