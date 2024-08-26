@@ -1,5 +1,5 @@
 import {Disclosure, DisclosureButton, DisclosurePanel} from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline'
 import {NavLink, useNavigate} from "react-router-dom";
 import {pokemonActions} from "../redux/slices";
 import {useAppDispatch} from "../hooks";
@@ -8,28 +8,29 @@ import {SearchForm} from "./SearchForm";
 import {urls} from "../constants/urls";
 
 const navigation = [
-    { name: 'Pokemon', link: 'pokemons'},
-    { name: 'My Collection', link: 'my-collection'},
+    {name: 'Pokemon', link: 'pokemons'},
+    {name: 'My Collection', link: 'my-collection'},
 ]
 
 const Navbar = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate()
-const  handleLogoClick = () => {
-    dispatch(pokemonActions.setUrl(urls.pokemons))
-    navigate('/')
-}
+    const handleLogoClick = () => {
+        dispatch(pokemonActions.setUrl(urls.pokemons))
+        navigate('/')
+    }
 
     return (
         <Disclosure as="nav" className="bg-gray-800 absolute top-0 w-full">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                 <div className="relative flex h-16 items-center justify-between">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                        <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                            <span className="absolute -inset-0.5" />
+                        <DisclosureButton
+                            className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                            <span className="absolute -inset-0.5"/>
                             <span className="sr-only">Open main menu</span>
-                            <Bars3Icon aria-hidden="true" className="block h-6 w-6 group-data-[open]:hidden" />
-                            <XMarkIcon aria-hidden="true" className="hidden h-6 w-6 group-data-[open]:block" />
+                            <Bars3Icon aria-hidden="true" className="block h-6 w-6 group-data-[open]:hidden"/>
+                            <XMarkIcon aria-hidden="true" className="hidden h-6 w-6 group-data-[open]:block"/>
                         </DisclosureButton>
                     </div>
                     <div className="flex flex-1 items-center justify-center sm:items-center sm:justify-center">
@@ -47,7 +48,7 @@ const  handleLogoClick = () => {
                                     <NavLink
                                         key={item.name}
                                         to={item.link}
-                                        className={({ isActive }) =>
+                                        className={({isActive}) =>
                                             isActive
                                                 ? "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
                                                 : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -68,7 +69,7 @@ const  handleLogoClick = () => {
                         <NavLink
                             key={item.name}
                             to={item.link}
-                            className={({ isActive }) =>
+                            className={({isActive}) =>
                                 isActive
                                     ? "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
                                     : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -83,4 +84,4 @@ const  handleLogoClick = () => {
     )
 }
 
-export { Navbar };
+export {Navbar};

@@ -1,9 +1,10 @@
-import { useSearchParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { useEffect } from "react";
-import { pokemonActions } from "../redux/slices";
-import { Pokemons } from "../components/PokemonsContainer/Pokemons";
-import { PokemonInfo } from "../components/PokemonsContainer/PokemonInfo";
+import {useSearchParams} from "react-router-dom";
+import {useEffect} from "react";
+import {useAppDispatch, useAppSelector} from "../hooks";
+import {pokemonActions} from "../redux/slices";
+
+import {Pokemons} from "../components/PokemonsContainer/Pokemons";
+import {PokemonInfo} from "../components/PokemonsContainer/PokemonInfo";
 import {ErrorComponent} from "../components/ErrorComponent";
 
 const SearchPage = () => {
@@ -11,15 +12,15 @@ const SearchPage = () => {
     const keyword = query.get("keyword");
     const searchType = query.get("searchType");
     const dispatch = useAppDispatch();
-    const { pokemonById, pokemonsByAbilityOrType, errors } = useAppSelector(state => state.pokemon);
+    const {pokemonById, pokemonsByAbilityOrType, errors} = useAppSelector(state => state.pokemon);
 
     useEffect(() => {
         if (searchType === "ability") {
-            dispatch(pokemonActions.getPokemonesByAbility({ name: keyword }));
+            dispatch(pokemonActions.getPokemonesByAbility({name: keyword}));
         } else if (searchType === "type") {
-            dispatch(pokemonActions.getPokemonesByType({ name: keyword }));
+            dispatch(pokemonActions.getPokemonesByType({name: keyword}));
         } else {
-            dispatch(pokemonActions.getPokemonById({ id: keyword }));
+            dispatch(pokemonActions.getPokemonById({id: keyword}));
         }
     }, [keyword, searchType, dispatch]);
 
@@ -28,9 +29,9 @@ const SearchPage = () => {
             {errors ? <ErrorComponent/>
                 : <div>
                     {searchType === "ability" || searchType === "type" ? (
-                        <Pokemons pokemon={pokemonsByAbilityOrType} />
+                        <Pokemons pokemon={pokemonsByAbilityOrType}/>
                     ) : pokemonById ? (
-                        <PokemonInfo pokemonById={pokemonById} />
+                        <PokemonInfo pokemonById={pokemonById}/>
                     ) : (
                         <div>Loading...</div>
                     )}
@@ -40,4 +41,4 @@ const SearchPage = () => {
     );
 };
 
-export { SearchPage };
+export {SearchPage};

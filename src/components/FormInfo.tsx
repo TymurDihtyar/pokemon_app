@@ -1,14 +1,15 @@
-import { useAppSelector } from "../hooks";
+import {useAppSelector} from "../hooks";
 
 const FormInfo = () => {
-    const { savedForm } = useAppSelector(state => state.form);
-    const { sprites, name, types } = savedForm || {};
+    const {savedForm} = useAppSelector(state => state.form);
+    const {sprites, name, types} = savedForm || {};
 
     return (
         <>
             {savedForm ? (
                 <div className="pt-6">
-                    <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+                    <div
+                        className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
                         <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
                             <img
                                 alt={sprites.front_default}
@@ -32,7 +33,8 @@ const FormInfo = () => {
                                 />
                             </div>
                         </div>
-                        <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
+                        <div
+                            className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
                             <img
                                 alt={sprites.back_shiny}
                                 src={sprites.back_shiny}
@@ -42,7 +44,8 @@ const FormInfo = () => {
                     </div>
 
                     {/* Product info */}
-                    <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-2 lg:pt-2">
+                    <div
+                        className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-2 lg:pt-2">
                         <div className="lg:col-span-2 lg:pr-8">
                             <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{name.toUpperCase()}</h1>
                         </div>
@@ -73,4 +76,4 @@ const FormInfo = () => {
     );
 }
 
-export { FormInfo };
+export {FormInfo};
