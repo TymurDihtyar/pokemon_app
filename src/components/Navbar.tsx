@@ -1,7 +1,7 @@
 import {Disclosure, DisclosureButton, DisclosurePanel} from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { NavLink } from "react-router-dom";
-import {SearchForm} from "../searchContainer/SearchForm";
+import {SearchForm} from "./SearchForm";
 
 
 const navigation = [

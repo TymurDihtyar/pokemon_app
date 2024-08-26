@@ -88,6 +88,7 @@ const pokemonSlice = createSlice({
         builder
             .addCase(getPokemonById.fulfilled, (state, action) => {
                 state.pokemonById = action.payload
+                state.errors = false
                 state.isLoading = false
             })
 
@@ -105,14 +106,15 @@ const pokemonSlice = createSlice({
                 const {pokemon} = action.payload
                 const normalize = pokemon.map(({pokemon}) => pokemon)
                 state.pokemonsByAbilityOrType = normalize
+                state.errors = false
                 state.isLoading = false
             })
 
-            .addMatcher(isRejected(getPokemonById, getPokemones), (state) => {
+            .addMatcher(isRejected(getPokemonById, getPokemones, getPokemonesByAbility, getPokemonesByType), (state) => {
                 state.errors = true
                 state.isLoading = false
             })
-            .addMatcher(isPending(getPokemonById, getPokemones), (state) => {
+            .addMatcher(isPending(getPokemonById, getPokemones, getPokemonesByAbility, getPokemonesByType), (state) => {
                 state.isLoading = true
             })
 })

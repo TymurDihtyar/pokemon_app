@@ -1,8 +1,8 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { Listbox } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import {useForm, SubmitHandler} from "react-hook-form";
+import {useNavigate} from "react-router-dom";
+import {Listbox} from "@headlessui/react";
+import {CheckIcon, ChevronUpDownIcon} from "@heroicons/react/20/solid";
+import {useState} from "react";
 
 interface SearchFormData {
     keyword: string;
@@ -10,19 +10,21 @@ interface SearchFormData {
 }
 
 const searchOptions = [
-    { id: 1, name: 'Name' },
-    { id: 2, name: 'Ability' },
-    { id: 3, name: 'Type' },
+    {id: 1, name: 'Name'},
+    {id: 2, name: 'Ability'},
+    {id: 3, name: 'Type'},
 ];
 
 const SearchForm = () => {
-    const { handleSubmit, register, setValue } = useForm<SearchFormData>();
+    const {handleSubmit, register, setValue} = useForm<SearchFormData>();
     const navigate = useNavigate();
     const [selected, setSelected] = useState(searchOptions[0]);
 
     const search: SubmitHandler<SearchFormData> = (data) => {
-        const { keyword, searchType } = data;
-        navigate(`/search?keyword=${keyword.toLowerCase()}&searchType=${searchType.toLowerCase()}`);
+        const {keyword, searchType} = data;
+        if (keyword) {
+            navigate(`/search?keyword=${keyword.toLowerCase()}&searchType=${searchType.toLowerCase()}`);
+        }
     };
 
     return (
@@ -49,7 +51,7 @@ const SearchForm = () => {
                             <span className="block truncate">{selected.name}</span>
                         </span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                            <ChevronUpDownIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
+                            <ChevronUpDownIcon aria-hidden="true" className="h-5 w-5 text-gray-400"/>
                         </span>
                     </Listbox.Button>
                     <Listbox.Options
@@ -58,7 +60,7 @@ const SearchForm = () => {
                             <Listbox.Option
                                 key={item.id}
                                 value={item}
-                                className={({ active }) =>
+                                className={({active}) =>
                                     `group relative cursor-default select-none py-2 pl-3 pr-9 ${
                                         active ? 'bg-blue-500 text-white' : 'text-gray-900'
                                     }`
@@ -74,7 +76,7 @@ const SearchForm = () => {
                                 {selected.name === item.name ? (
                                     <span
                                         className="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-500 group-active:text-white">
-                                        <CheckIcon aria-hidden="true" className="h-5 w-5" />
+                                        <CheckIcon aria-hidden="true" className="h-5 w-5"/>
                                     </span>
                                 ) : null}
                             </Listbox.Option>
@@ -82,9 +84,11 @@ const SearchForm = () => {
                     </Listbox.Options>
                 </div>
             </Listbox>
-            <button type="submit" className="ml-[-1px] bg-blue-500 text-white px-4 py-1 rounded-r-md w-1/3 h-8 hover:bg-blue-700">Search</button>
+            <button type="submit"
+                    className="ml-[-1px] bg-blue-500 text-white px-4 py-1 rounded-r-md w-1/3 h-8 hover:bg-blue-700">Search
+            </button>
         </form>
     );
 };
 
-export { SearchForm };
+export {SearchForm};

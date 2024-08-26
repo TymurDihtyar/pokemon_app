@@ -2,7 +2,7 @@ import {FC, PropsWithChildren, useEffect} from 'react';
 import { useState } from 'react';
 import { Radio, RadioGroup } from '@headlessui/react';
 import { IOnePokemon } from "../../interfaces/onePokemonInterface";
-import {FormInfo} from "../Form/FormInfo";
+import {FormInfo} from "../FormInfo";
 import {useAppDispatch} from "../../hooks";
 import {formActions} from "../../redux/slices";
 import {toast} from "react-toastify";

@@ -4,13 +4,14 @@ import { useEffect } from "react";
 import { pokemonActions } from "../redux/slices";
 import { Pokemons } from "../components/PokemonsContainer/Pokemons";
 import { PokemonInfo } from "../components/PokemonsContainer/PokemonInfo";
+import {ErrorComponent} from "../components/ErrorComponent";
 
 const SearchPage = () => {
     const [query] = useSearchParams();
     const keyword = query.get("keyword");
     const searchType = query.get("searchType");
     const dispatch = useAppDispatch();
-    const { pokemonById, pokemonsByAbilityOrType } = useAppSelector(state => state.pokemon);
+    const { pokemonById, pokemonsByAbilityOrType, errors } = useAppSelector(state => state.pokemon);
 
     useEffect(() => {
         if (searchType === "ability") {
@@ -23,15 +24,19 @@ const SearchPage = () => {
     }, [keyword, searchType, dispatch]);
 
     return (
-        <div>
-            {searchType === "ability" || searchType === "type" ? (
-                <Pokemons pokemon={pokemonsByAbilityOrType} />
-            ) : pokemonById ? (
-                <PokemonInfo pokemonById={pokemonById} />
-            ) : (
-                <div>Loading...</div>
-            )}
-        </div>
+        <>
+            {errors ? <ErrorComponent/>
+                : <div>
+                    {searchType === "ability" || searchType === "type" ? (
+                        <Pokemons pokemon={pokemonsByAbilityOrType} />
+                    ) : pokemonById ? (
+                        <PokemonInfo pokemonById={pokemonById} />
+                    ) : (
+                        <div>Loading...</div>
+                    )}
+                </div>}
+        </>
+
     );
 };
 

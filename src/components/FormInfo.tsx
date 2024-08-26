@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../hooks";
+import { useAppSelector } from "../hooks";
 
 const FormInfo = () => {
     const { savedForm } = useAppSelector(state => state.form);
