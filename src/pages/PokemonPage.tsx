@@ -1,25 +1,28 @@
-import {useEffect} from "react";
-import {urls} from "../constants/urls";
-import {Pokemons} from "../components/PokemonsContainer/Pokemons";
-import {useAppDispatch, useAppSelector} from "../hooks";
-import {pokemonActions} from "../redux/slices";
-import {Pagination} from "../components/Pagination";
+import { useEffect } from "react";
+import { Pokemons } from "../components/PokemonsContainer/Pokemons";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { pokemonActions } from "../redux/slices";
+import { Pagination } from "../components/Pagination";
+import {Loading} from "../components/Loading";
 
 const PokemonPage = () => {
     const dispatch = useAppDispatch();
-    const {allPokemons} = useAppSelector(state => state.pokemon)
+    const { allPokemons, currentUrl, isLoading } = useAppSelector((state) => state.pokemon);
 
     useEffect(() => {
-        dispatch(pokemonActions.getPokemones({url: urls.pokemons}))
-    }, [dispatch]);
-
+        dispatch(pokemonActions.getPokemones({ url: currentUrl }));
+    }, [currentUrl, dispatch]);
 
     return (
         <div>
-            {allPokemons && <Pokemons pokemon={allPokemons}/>}
-            <Pagination/>
+            {isLoading ? (
+                <Loading />
+            ) : (
+                allPokemons && <Pokemons pokemon={allPokemons} />
+            )}
+            <Pagination />
         </div>
     );
 };
 
-export {PokemonPage};
+export { PokemonPage };

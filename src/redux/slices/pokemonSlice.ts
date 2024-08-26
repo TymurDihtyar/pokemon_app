@@ -7,8 +7,10 @@ import {IAbilityOrType} from "../../interfaces/ability_typeInterface";
 import {PokemonService} from "../../services/pokemonService";
 import {TypeService} from "../../services/typeService";
 import {AbilityService} from "../../services/abilityService";
+import {urls} from "../../constants/urls";
 
 interface IState {
+    currentUrl: string
     next: string
     previous: string
     allPokemons: IPokemon[]
@@ -19,6 +21,7 @@ interface IState {
 }
 
 const initialState: IState = {
+    currentUrl: urls.pokemons,
     next: null,
     previous: null,
     allPokemons: [],
@@ -83,7 +86,11 @@ const getPokemonesByType = createAsyncThunk<IAbilityOrType, { name: string }>(
 const pokemonSlice = createSlice({
     name: 'pokemonSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setUrl: (state, action) => {
+            state.currentUrl = action.payload
+        },
+    },
     extraReducers: builder =>
         builder
             .addCase(getPokemonById.fulfilled, (state, action) => {

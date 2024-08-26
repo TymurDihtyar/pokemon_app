@@ -1,11 +1,12 @@
 import {FC, PropsWithChildren, useEffect} from 'react';
 import { useState } from 'react';
 import { Radio, RadioGroup } from '@headlessui/react';
-import { IOnePokemon } from "../../interfaces/onePokemonInterface";
-import {FormInfo} from "../FormInfo";
-import {useAppDispatch} from "../../hooks";
-import {formActions} from "../../redux/slices";
 import {toast} from "react-toastify";
+import {formActions} from "../../redux/slices";
+import {useAppDispatch} from "../../hooks";
+
+import {FormInfo} from "../FormInfo";
+import { IOnePokemon } from "../../interfaces/onePokemonInterface";
 import {toastifyParam} from "../../constants/tostifyParamers";
 
 interface IProps extends PropsWithChildren {

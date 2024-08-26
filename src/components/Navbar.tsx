@@ -1,8 +1,11 @@
 import {Disclosure, DisclosureButton, DisclosurePanel} from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { NavLink } from "react-router-dom";
-import {SearchForm} from "./SearchForm";
+import {NavLink, useNavigate} from "react-router-dom";
+import {pokemonActions} from "../redux/slices";
+import {useAppDispatch} from "../hooks";
 
+import {SearchForm} from "./SearchForm";
+import {urls} from "../constants/urls";
 
 const navigation = [
     { name: 'Pokemon', link: 'pokemons'},
@@ -10,6 +13,13 @@ const navigation = [
 ]
 
 const Navbar = () => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate()
+const  handleLogoClick = () => {
+    dispatch(pokemonActions.setUrl(urls.pokemons))
+    navigate('/')
+}
+
     return (
         <Disclosure as="nav" className="bg-gray-800 absolute top-0 w-full">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -23,11 +33,12 @@ const Navbar = () => {
                         </DisclosureButton>
                     </div>
                     <div className="flex flex-1 items-center justify-center sm:items-center sm:justify-center">
-                        <div className="flex flex-shrink-0 items-center absolute left-0">
+                        <div className="flex flex-shrink-0 items-center ">
                             <img
                                 alt="Logo"
                                 src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d8bf49eb-f01d-4851-810a-6aa6fc317107/defoec0-d0c0a40d-139d-482a-a043-6da7178296dd.png/v1/fill/w_1145,h_698/pokemon_logo_update_2021_by_obsolete00_defoec0-pre.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9OTc1IiwicGF0aCI6IlwvZlwvZDhiZjQ5ZWItZjAxZC00ODUxLTgxMGEtNmFhNmZjMzE3MTA3XC9kZWZvZWMwLWQwYzBhNDBkLTEzOWQtNDgyYS1hMDQzLTZkYTcxNzgyOTZkZC5wbmciLCJ3aWR0aCI6Ijw9MTYwMCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.q5xiGiCiW5rIaSkzLpngofi4bsdFnlMMGEGIC14R5Ic"
-                                className="h-16 w-auto"
+                                className="h-16 w-auto cursor-pointer"
+                                onClick={() => handleLogoClick()}
                             />
                         </div>
                         <div className="hidden sm:ml-6 sm:block">

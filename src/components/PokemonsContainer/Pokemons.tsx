@@ -1,4 +1,5 @@
 import {FC, PropsWithChildren} from 'react';
+
 import {IPokemon} from "../../interfaces/pokemosInterface";
 import {OnePokemon} from "./OnePokemon";
 
