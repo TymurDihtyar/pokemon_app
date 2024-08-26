@@ -140,7 +140,7 @@ const PokemonInfo: FC<IProps> = ({ pokemonById }) => {
                             <div>
                                 <h3 className="text-lg font-medium text-black">Types</h3>
                                 <div className="mt-2">
-                                    <ul role="list" className="list-disc space-y-2 pl-4 text-lg">
+                                    <ul className="list-disc space-y-2 pl-4 text-lg">
                                         {types.map((item, index) => (
                                             <li key={index} className="text-gray-400">
                                                 <span className="text-white">{item.type.name}</span>
@@ -152,7 +152,7 @@ const PokemonInfo: FC<IProps> = ({ pokemonById }) => {
                             <div className="mt-10">
                                 <h3 className="text-lg font-medium text-black">Abilities</h3>
                                 <div className="mt-2">
-                                    <ul role="list" className="list-disc space-y-2 pl-4 text-lg">
+                                    <ul className="list-disc space-y-2 pl-4 text-lg">
                                         {abilities.map((item, index) => (
                                             <li key={index} className="text-gray-400">
                                                 <span className="text-white">{item.ability.name}</span>
@@ -165,7 +165,7 @@ const PokemonInfo: FC<IProps> = ({ pokemonById }) => {
                         <div className="">
                             <h3 className="text-lg font-medium text-black">Stats</h3>
                             <div className="mt-2">
-                                <ul role="list" className="list-disc space-y-2 pl-4 text-lg">
+                                <ul className="list-disc space-y-2 pl-4 text-lg">
                                     {stats.map((item, index) => (
                                         <li key={index} className="text-gray-400">
                                             <span className="text-white">{item.stat.name} : {item.base_stat}</span>

@@ -78,6 +78,7 @@ const Navbar = () => {
                             {item.name}
                         </NavLink>
                     ))}
+                    <SearchForm/>
                 </div>
             </DisclosurePanel>
         </Disclosure>
