@@ -8,14 +8,14 @@ import { PokemonInfo } from "../components/PokemonsContainer/PokemonInfo";
 const SearchPage = () => {
     const [query] = useSearchParams();
     const keyword = query.get("keyword");
-    const searchType = query.get("type");
+    const searchType = query.get("searchType");
     const dispatch = useAppDispatch();
     const { pokemonById, pokemonsByAbilityOrType } = useAppSelector(state => state.pokemon);
 
     useEffect(() => {
-        if (searchType === "Ability") {
+        if (searchType === "ability") {
             dispatch(pokemonActions.getPokemonesByAbility({ name: keyword }));
-        } else if (searchType === "Type") {
+        } else if (searchType === "type") {
             dispatch(pokemonActions.getPokemonesByType({ name: keyword }));
         } else {
             dispatch(pokemonActions.getPokemonById({ id: keyword }));
@@ -24,7 +24,7 @@ const SearchPage = () => {
 
     return (
         <div>
-            {searchType === "Ability" || searchType === "Type" ? (
+            {searchType === "ability" || searchType === "type" ? (
                 <Pokemons pokemon={pokemonsByAbilityOrType} />
             ) : pokemonById ? (
                 <PokemonInfo pokemonById={pokemonById} />

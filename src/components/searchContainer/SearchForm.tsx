@@ -6,7 +6,7 @@ import { useState } from "react";
 
 interface SearchFormData {
     keyword: string;
-    type: string;
+    searchType: string;
 }
 
 const searchOptions = [
@@ -21,8 +21,8 @@ const SearchForm = () => {
     const [selected, setSelected] = useState(searchOptions[0]);
 
     const search: SubmitHandler<SearchFormData> = (data) => {
-        const { keyword, type } = data;
-        navigate(`/search?keyword=${keyword.toLowerCase()}&type=${type}`);
+        const { keyword, searchType } = data;
+        navigate(`/search?keyword=${keyword.toLowerCase()}&searchType=${searchType.toLowerCase()}`);
     };
 
     return (
@@ -36,11 +36,11 @@ const SearchForm = () => {
             <input
                 type="hidden"
                 value={selected.name}
-                {...register('type')}
+                {...register('searchType')}
             />
             <Listbox value={selected} onChange={(value) => {
                 setSelected(value);
-                setValue('type', value.name);
+                setValue('searchType', value.name);
             }}>
                 <div className="relative w-1/3">
                     <Listbox.Button
