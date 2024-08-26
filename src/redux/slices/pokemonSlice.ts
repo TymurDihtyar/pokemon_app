@@ -3,13 +3,17 @@ import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected} from 
 import {AxiosError} from "axios";
 import {IPokemon, IPokemons} from "../../interfaces/pokemosInterface";
 import {IOnePokemon} from "../../interfaces/onePokemonInterface";
+import {IAbilityOrType} from "../../interfaces/ability_typeInterface";
 import {PokemonService} from "../../services/pokemonService";
+import {TypeService} from "../../services/typeService";
+import {AbilityService} from "../../services/abilityService";
 
 interface IState {
     next: string
     previous: string
     allPokemons: IPokemon[]
     pokemonById: IOnePokemon
+    pokemonsByAbilityOrType: IPokemon[]
     errors: boolean
     isLoading: boolean
 }
@@ -19,6 +23,7 @@ const initialState: IState = {
     previous: null,
     allPokemons: [],
     pokemonById: null,
+    pokemonsByAbilityOrType: [],
     errors: null,
     isLoading: null,
 }
@@ -49,6 +54,32 @@ const getPokemonById = createAsyncThunk<IOnePokemon, { id: string }>(
     }
 )
 
+const getPokemonesByAbility = createAsyncThunk<IAbilityOrType, { name: string }>(
+    'pokemonSlice/getPokemonesByAbility',
+    async ({name}, {rejectWithValue}) => {
+        try {
+            const {data} = await AbilityService.getPokemonesByAbility(name)
+            return data
+        } catch (e) {
+            const err = e as AxiosError
+            return rejectWithValue(err.response?.data)
+        }
+    }
+)
+
+const getPokemonesByType = createAsyncThunk<IAbilityOrType, { name: string }>(
+    'pokemonSlice/getPokemonesByType',
+    async ({name}, {rejectWithValue}) => {
+        try {
+            const {data} = await TypeService.getPokemonesByType(name)
+            return data
+        } catch (e) {
+            const err = e as AxiosError
+            return rejectWithValue(err.response?.data)
+        }
+    }
+)
+
 const pokemonSlice = createSlice({
     name: 'pokemonSlice',
     initialState,
@@ -70,6 +101,13 @@ const pokemonSlice = createSlice({
                 state.isLoading = false
             })
 
+            .addMatcher(isFulfilled(getPokemonesByAbility, getPokemonesByType), (state, action) => {
+                const {pokemon} = action.payload
+                const normalize = pokemon.map(({pokemon}) => pokemon)
+                state.pokemonsByAbilityOrType = normalize
+                state.isLoading = false
+            })
+
             .addMatcher(isRejected(getPokemonById, getPokemones), (state) => {
                 state.errors = true
                 state.isLoading = false
@@ -85,5 +123,7 @@ const pokemonActions = {
     ...actions,
     getPokemones,
     getPokemonById,
+    getPokemonesByAbility,
+    getPokemonesByType
 }
 export {pokemonReducer, pokemonActions}

@@ -16,16 +16,13 @@ const searchOptions = [
 ];
 
 const SearchForm = () => {
-    const { reset, handleSubmit, register, setValue } = useForm<SearchFormData>();
+    const { handleSubmit, register, setValue } = useForm<SearchFormData>();
     const navigate = useNavigate();
     const [selected, setSelected] = useState(searchOptions[0]);
 
     const search: SubmitHandler<SearchFormData> = (data) => {
         const { keyword, type } = data;
-        console.log(keyword, type);
-        // Виконайте пошук на основі ключового слова та типу
-        // navigate(`/search?keyword=${keyword}&type=${type}`);
-        reset();
+        navigate(`/search?keyword=${keyword.toLowerCase()}&type=${type}`);
     };
 
     return (
@@ -43,11 +40,11 @@ const SearchForm = () => {
             />
             <Listbox value={selected} onChange={(value) => {
                 setSelected(value);
-                setValue('type', value.name); // Оновлюємо значення "type"
+                setValue('type', value.name);
             }}>
                 <div className="relative w-1/3">
                     <Listbox.Button
-                        className="relative w-full cursor-default rounded-none bg-white py-1 px-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6 h-8">
+                        className="relative w-full cursor-default rounded-none bg-white py-1 px-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm sm:leading-6 h-8">
                         <span className="flex items-center">
                             <span className="block truncate">{selected.name}</span>
                         </span>
@@ -63,7 +60,7 @@ const SearchForm = () => {
                                 value={item}
                                 className={({ active }) =>
                                     `group relative cursor-default select-none py-2 pl-3 pr-9 ${
-                                        active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                                        active ? 'bg-blue-500 text-white' : 'text-gray-900'
                                     }`
                                 }>
                                 <div className="flex items-center">
@@ -76,7 +73,7 @@ const SearchForm = () => {
                                 </div>
                                 {selected.name === item.name ? (
                                     <span
-                                        className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-active:text-white">
+                                        className="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-500 group-active:text-white">
                                         <CheckIcon aria-hidden="true" className="h-5 w-5" />
                                     </span>
                                 ) : null}
