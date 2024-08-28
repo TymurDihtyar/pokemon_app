@@ -18,7 +18,7 @@ const Pagination = () => {
     return (
         <div
             className="flex items-center justify-between border-t border-gray-200 bg-gray-800 px-4 py-3 sm:px-6 fixed bottom-0 w-full">
-            <div className="flex flex-1 justify-between">
+            <div className="flex flex-1 justify-between mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                 <button
                     disabled={!previous}
                     onClick={() => handlePrevious()}
